@@ -80,6 +80,6 @@ data
 
 ```{r}
 #Q6
-write.csv(data,file = file.choose())
+write.csv(data,file = '../dataset/Project_Housing.csv')
 ```
 
