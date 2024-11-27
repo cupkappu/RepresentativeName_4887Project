@@ -27,19 +27,55 @@ data
 
 ```{r}
 #Q4
-require(stringr)
-data$TotalBed <- as.numeric(str_extract(str_extract(data$types,"[0-9]* (bed)"),"[0-9]*"))
-data[is.na(data$TotalBed),c("TotalBed")] <- 0
+data$TotalBeds <- mapply(function(x,y){
+  if( is.na(x)!= TRUE ){
+    return (x)
+  }else if(is.na(y) != TRUE){
+    return (y)
+  }else{return(0)}
+}, data$bed, data$beds)
 ```
 
 ```{r}
-data
+data$TotalBaths <- mapply(function(x,y){
+  if( is.na(x)!= TRUE ){
+    return (x)
+  }else if(is.na(y) != TRUE){
+    return (y)
+  }else{return(0)}
+}, data$bath, data$baths)
+
 ```
 
 
 
+```{r}
+data$TotalReceptions <- mapply(function(x,y){
+  if( is.na(x)!= TRUE ){
+    return (x)
+  }else if(is.na(y) != TRUE){
+    return (y)
+  }else{return(0)}
+}, data$reception, data$receptions)
+```
+
+
+```{r}
+#Q5
+data$FlatType <- str_extract(data$types, "(?<=\\d bed).*?(?= for sale)")
+data[is.na(data$FlatType),]$FlatType <- str_extract(data[is.na(data$FlatType),'types'],".*(?= for sale)")
+```
 
 
 
+```{r}
+#整理Data
+data <- data[,-which(names(data) %in% c('baths', 'beds', 'bed', 'receptions', 'reception', 'bath'))]
+data <- data[!(is.na(data$types)),]
+```
 
+```{r}
+#Q6
+write.csv(data,file = 'Project_Housing.csv')
+```
 
