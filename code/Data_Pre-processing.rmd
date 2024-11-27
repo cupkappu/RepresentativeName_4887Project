@@ -3,7 +3,7 @@
 ```{r}
 #Q1
 require(jsonlite)
-data <- fromJSON('Housing2122.json')
+data <- fromJSON(file.choose())
 data <- as.data.frame(data)
 ```
 
@@ -80,6 +80,6 @@ data
 
 ```{r}
 #Q6
-write.csv(data,file = 'Project_Housing.csv')
+write.csv(data,file = file.choose())
 ```
 
