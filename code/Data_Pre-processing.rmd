@@ -74,7 +74,14 @@ data <- data[,-which(names(data) %in% c('baths', 'beds', 'bed', 'receptions', 'r
 
 
 ```{r}
-data
+data$FlatType <- str_trim(data$FlatType, side = "left")
+data$FlatType <- tolower(data$FlatType)
+data <- data[!(is.na(data$FlatType)),]
+```
+
+
+```{r}
+unique(data$FlatType)
 ```
 
 
