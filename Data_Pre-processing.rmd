@@ -1,0 +1,45 @@
+
+
+```{r}
+#Q1
+require(jsonlite)
+data <- fromJSON('Housing2122.json')
+data <- as.data.frame(data)
+data
+```
+
+```{r}
+#Q2
+Sys.setlocale("LC_TIME", "English")
+data$date <- gsub("nd|st", "", data$date)
+data$date <- as.Date(data$date, format = "%d %b %Y")
+data$date <- format(data$date, "%e/%m/%Y")
+data
+```
+
+```{r}
+#Q3
+data[is.na(data$sq.),c('sq.')] <- "0s"
+data
+```
+
+
+
+```{r}
+#Q4
+require(stringr)
+data$TotalBed <- as.numeric(str_extract(str_extract(data$types,"[0-9]* (bed)"),"[0-9]*"))
+data[is.na(data$TotalBed),c("TotalBed")] <- 0
+```
+
+```{r}
+data
+```
+
+
+
+
+
+
+
+
