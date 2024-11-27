@@ -5,16 +5,14 @@
 require(jsonlite)
 data <- fromJSON('Housing2122.json')
 data <- as.data.frame(data)
-data
 ```
 
 ```{r}
 #Q2
 Sys.setlocale("LC_TIME", "English")
-data$date <- gsub("nd|st", "", data$date)
+data$date <- gsub("nd|st|th|rd", "", data$date)
 data$date <- as.Date(data$date, format = "%d %b %Y")
 data$date <- format(data$date, "%e/%m/%Y")
-data
 ```
 
 ```{r}
@@ -27,41 +25,42 @@ data
 
 ```{r}
 #Q4
-data$TotalBeds <- mapply(function(x,y){
+data$TotalBeds <- as.numeric(mapply(function(x,y){
   if( is.na(x)!= TRUE ){
     return (x)
   }else if(is.na(y) != TRUE){
     return (y)
   }else{return(0)}
-}, data$bed, data$beds)
+}, data$bed, data$beds))
 ```
 
 ```{r}
-data$TotalBaths <- mapply(function(x,y){
+data$TotalBaths <- as.numeric(mapply(function(x,y){
   if( is.na(x)!= TRUE ){
     return (x)
   }else if(is.na(y) != TRUE){
     return (y)
   }else{return(0)}
-}, data$bath, data$baths)
+}, data$bath, data$baths))
 
 ```
 
 
 
 ```{r}
-data$TotalReceptions <- mapply(function(x,y){
+data$TotalReceptions <- as.numeric(mapply(function(x,y){
   if( is.na(x)!= TRUE ){
     return (x)
   }else if(is.na(y) != TRUE){
     return (y)
   }else{return(0)}
-}, data$reception, data$receptions)
+}, data$reception, data$receptions))
 ```
 
 
 ```{r}
 #Q5
+require(stringr)
 data$FlatType <- str_extract(data$types, "(?<=\\d bed).*?(?= for sale)")
 data[is.na(data$FlatType),]$FlatType <- str_extract(data[is.na(data$FlatType),'types'],".*(?= for sale)")
 ```
@@ -71,8 +70,13 @@ data[is.na(data$FlatType),]$FlatType <- str_extract(data[is.na(data$FlatType),'t
 ```{r}
 #整理Data
 data <- data[,-which(names(data) %in% c('baths', 'beds', 'bed', 'receptions', 'reception', 'bath'))]
-data <- data[!(is.na(data$types)),]
 ```
+
+
+```{r}
+data
+```
+
 
 ```{r}
 #Q6
