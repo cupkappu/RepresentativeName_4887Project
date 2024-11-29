@@ -18,6 +18,8 @@ PROC SQL OUTOBS=20;
 QUIT;
 RUN;
 ```
+![alt text](../outputs/images/Q1.png)
+
 **Explanation:** This query retrieves the last 20 records from the `ASM.Housing` dataset by ordering the entries in descending order using a monotonic function, which gives a unique number to each row. 
 
 ### Q2: Average Number of Receptions by Property Type
@@ -31,6 +33,9 @@ PROC SQL outobs=1;
 QUIT;
 RUN;
 ```
+
+![alt text](../outputs/images/Q2.png)
+
 **Explanation:** This query calculates the average number of receptions for each property type (`FlatType`). It groups the data by property type and sorts the result to find which type has the highest average number of receptions. The `outobs=1` limits the result to the top entry.
 
 **Answer**: The average number of receptions by property type for a "link-detached house" is 2.
@@ -48,6 +53,9 @@ proc sgpie data=FlatTypeFreq;
 	pie FlatType / response=freq;
 run;
 ```
+
+![alt text](../outputs/images/Q3.png)
+
 **Explanation:** This code creates a frequency table of property types, counting how many entries correspond to each type. The results are then visualized in a pie chart to clearly show the distribution of property types, helping identify the most common type.
 
 **Answer**: The most common property type is flat, with a frequency of 5,994 entries. The pie chart visually represents the distribution of property types, showing the contributions of each type.
@@ -73,6 +81,9 @@ proc sgplot data=BathDistribution;
     yaxis label="Total Bathrooms";
 run;
 ```
+
+![alt text](../outputs/images/Q4.png)
+
 **Explanation:** This query extracts the number of bathrooms for flats and terraced houses, organizing the data by property type. The box plot visualizes the distribution of bathroom counts, allowing comparison between the two property types.
 
 **Answer**:
@@ -88,6 +99,9 @@ PROC SQL outobs=2;
 QUIT;
 RUN;
 ```
+
+![alt text](../outputs/images/Q5.png)
+
 **Explanation:** This query counts the number of records for each property type to determine turnover. By ordering the results in descending order and limiting the output to two entries, it identifies the property type with the second most records.
 
 **Answer**
@@ -120,6 +134,9 @@ proc sgplot data=TypeRelevent;
     yaxis label="Average Price";
 run;
 ```
+
+![alt text](../outputs/images/Q6.png)
+
 **Explanation:** This set of queries calculates the average price, number of bedrooms, and number of bathrooms for each property type. The results are visualized using scatter plots to explore potential relationships between average price and the average number of bedrooms and bathrooms, aiding in understanding pricing trends based on property features.
 
 **Analyze**: 
