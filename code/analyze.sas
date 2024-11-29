@@ -1,4 +1,4 @@
-/* Q1 */
+/* Import */
 PROC IMPORT
 	out=ASM.Housing
 	datafile='/home/u64002637/ASM/Project_Housing.csv'
@@ -6,13 +6,19 @@ PROC IMPORT
 	replace;
 RUN;
 
-/* Q2 */
+/* Q1 */
+data _null_;
+	put 'Question 1';
+run;
 PROC SQL OUTOBS=20;
 	select * from ASM.Housing ORDER BY monotonic() desc;
 QUIT;
 RUN;
 
-/* Q3 */
+/* Q2 */
+data _null_;
+	put 'Question 2';
+run;
 PROC SQL outobs=1;
 	select avg(TotalReceptions) as TotalReceptionsByType, 
 		FlatType from ASM.Housing
@@ -21,7 +27,10 @@ PROC SQL outobs=1;
 QUIT;
 RUN;
 
-/* Q4 */
+/* Q3 */
+data _null_;
+	put 'Question 3';
+run;
 PROC SQL;
 	create table FlatTypeFreq as 
 	select count(VAR1) as freq, FlatType from ASM.Housing group by FlatType order by freq desc;
@@ -32,7 +41,30 @@ proc sgpie data=FlatTypeFreq;
 		pie FlatType / response=freq;
 run;
 
+/* Q4 */
+data _null_;
+	put 'Question 4';
+run;
+PROC SQL;
+    create table BathDistribution as
+    select FlatType, 
+           TotalBaths
+    from ASM.Housing
+    where FlatType in ('flat', 'terraced house')
+    group by FlatType;
+QUIT;
+proc sgplot data=BathDistribution;
+    title "Distribution of Total Bathrooms by Flat Type";
+    vbox TotalBaths / category=FlatType;
+    xaxis label="Flat Type";
+    yaxis label="Total Bathrooms";
+run;
+
+
 /* Q5 */
+data _null_;
+	put 'Question 5';
+run;
 PROC SQL outobs=2;
 	select count(VAR1) as volumn, FlatType 
 	from ASM.Housing group by FlatType order by volumn desc;
@@ -40,6 +72,9 @@ QUIT;
 RUN;
 
 /* Q6 */
+data _null_;
+	put 'Question 6';
+run;
 PROC SQL;
 	create table TypeRelevent as
 	select avg(price) as avg_price, 
